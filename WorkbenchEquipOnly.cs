@@ -135,31 +135,7 @@ namespace Oxide.Plugins
                 if (PermissionUtil.HasPermission(player, PermissionUtil.IGNORE))
                     return ItemContainer.CanAcceptResult.CanAccept;
 
-                bool nearWorkbench = false;
-
-                switch (requiredWorkbenchLevel)
-                {
-                    case 1:
-                        {
-                            nearWorkbench = player.HasPlayerFlag(BasePlayer.PlayerFlags.Workbench1)
-                                || player.HasPlayerFlag(BasePlayer.PlayerFlags.Workbench2)
-                                || player.HasPlayerFlag(BasePlayer.PlayerFlags.Workbench3);
-                            break;
-                        }
-                    case 2:
-                        {
-                            nearWorkbench = player.HasPlayerFlag(BasePlayer.PlayerFlags.Workbench2)
-                                || player.HasPlayerFlag(BasePlayer.PlayerFlags.Workbench3);
-                            break;
-                        }
-                    case 3:
-                        {
-                            nearWorkbench = player.HasPlayerFlag(BasePlayer.PlayerFlags.Workbench3);
-                            break;
-                        }
-                }
-
-                if (!nearWorkbench)
+                if (player.currentCraftLevel < (float)requiredWorkbenchLevel)
                 {
                     if (!_messageSent.ContainsKey(player.userID) || !_messageSent[player.userID])
                     {
@@ -178,7 +154,7 @@ namespace Oxide.Plugins
 
         #endregion Oxide Hooks
 
-        #region Permission
+        #region Permissions
 
         private static class PermissionUtil
         {
@@ -202,7 +178,7 @@ namespace Oxide.Plugins
             }
         }
 
-        #endregion Permission
+        #endregion Permissions
 
         #region Localization
 
