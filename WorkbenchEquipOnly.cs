@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Oxide.Plugins
 {
-    [Info("Workbench Equip Only", "VisEntities", "1.0.0")]
+    [Info("Workbench Equip Only", "VisEntities", "1.0.1")]
     [Description("Requires players to be near workbenches to equip weapon mods.")]
     public class WorkbenchEquipOnly : RustPlugin
     {
@@ -143,6 +143,7 @@ namespace Oxide.Plugins
                         SendMessage(player, Lang.WrongWorkbenchLevel, requiredWorkbenchLevel);
                     }
 
+                    timer.Once(1f, () => _messageSent[player.userID] = false);
                     return ItemContainer.CanAcceptResult.CannotAccept;
                 }
 
